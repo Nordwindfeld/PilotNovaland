@@ -3,7 +3,6 @@ import random
 import psycopg2
 import postgres
 import psycopg2_pool
-
 from otree.models import player
 
 
@@ -11,6 +10,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'MockUp'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+
+    #Ich habe in der C Klasse die Daten definiert, welche am Anfang fest stehen sollen und erstmal Konstant sind
     # Page 2
     Staatsbuergerschaft = random.randint(0, 2)
     Mitglieder_Arbeitslos = random.randint(0, 3)
@@ -22,13 +23,6 @@ class C(BaseConstants):
     # Einkommenssteuer
     Random_Steuer = random.randrange(20, 40, 10)
 
-    # page 9
-    Beide_Vertrauen = 400
-    Nur_Du_Vertraust = -400
-    Du_misstraust = 200
-    beide_misstrauen = 0
-
-
 class Subsession(BaseSubsession):
     pass
 
@@ -38,8 +32,13 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    # in der Player Klasse habe ich alle Variabeln definiert, welche von den Eingaben von den Teilnehmenden verändert werden können.
+    # Dafür habe ich euch mit den Unterpunkten "Pages" ausgelistet, welche Variabeln für welche Seite wichtig sind
+
     # Page 2 Staatsbuergerschaft
-    # Hier werden die Variabeln definiert, welche kontrollieren, welche Gruppe die Teilnehmenden angehören
+    #-----------------
+    # Hier werden die Variabeln definiert, welche kontrollieren, welche Gruppe die Teilnehmenden angehören.
+    # Dabei habe ich alle
     Staatsbuergerschaft = models.StringField()
     Mitglieder_Arbeitslos = models.StringField()
     Ethnische_Gruppe = models.StringField()
@@ -51,14 +50,17 @@ class Player(BasePlayer):
     )
 
     # page 2_5
+    #----------------
     Staatsbuergerschaft_Kontrolle = models.BooleanField()
 
     # page 3
+    #----------------
     Geld_besitz = models.IntegerField()
     Einkommenssteuer = models.FloatField()
     Geld_uebrig = models.FloatField()
 
     # page 4
+    #----------------
     Geld_Nach_Auswahl = models.FloatField()
 
     Wohnung = models.StringField(
@@ -106,6 +108,8 @@ class Player(BasePlayer):
     )
 
     # page 9 Vertrauensgame
+    #----------------
+    # Hier muss ich erst noch die Live pages integrieren, bevor ich das fertig machen kann
     vertrauen = models.BooleanField(
         label="Bitte wähle, ob du der anderen Person vertraust oder nicht:",
         choices=[
@@ -114,9 +118,13 @@ class Player(BasePlayer):
         ]
     )
 
-
+# in dem Bereich ordne ich die Variabeln, den einzelnen Seiten zu.
 class page_1_Startseite(Page):
+    # mit vars_for_template erstelle ich Variabeln, welche von der HTML Seite erkannt werden und integriert werden können
     def vars_for_template(player: Player):
+    # Ich benutze hier eine If Funktion, da ich die Konstanten die als Grundlage für diese Variabeln dienen, oben randomisiert habe.
+    # Es ist auch möglich mit anderen Datatypes randomisierung zu machen, aber mit den Zahlen Werten fällt es am Ende leichter, diese in Postgres abzurufen.
+    # An sich teile ich hier nur die models zu, welche ich oben beim player definiert habe.
         if C.Staatsbuergerschaft == 1:
             player.Staatsbuergerschaft = "Ja"
         else:
@@ -159,12 +167,10 @@ class page_2_5_Test_Staatsbuergerschaft(Page):
             player.Staatsbuergerschaft_Kontrolle = True
         else:
             player.Staatsbuergerschaft_Kontrolle = False
-
+    # mit der def is_displayed Funktion kann man Seiten überspringen lassen, was ich in dem Fall gemacht habe, da diese Seite nur gezeigt wird, wenn die Teilnehmenden die Frage falsch beantwortet haben.
     def is_displayed(player: Player):
         return player.Staatsbuergerschaft != player.Frage_Staatsbuergerschaft
 
-
-# man kann über NUM_ROUNDS Runten einstellen, in denen je
 
 class page_3_Einkommen(Page):
     pass
@@ -180,6 +186,8 @@ class page_4_Beduerfnisse_abdecken(Page):
 class page_5_Fragentext_1(Page):
     form_model = 'player'
     form_fields = ['F1']
+    
+    # mit der if FUnktion, sage ich dem Programm einfach nur, wie viel Geld abgezogen werden, durch die Auswahl der Teilnehmenden 
 
     def vars_for_template(player: Player):
         player.Geld_Nach_Auswahl = player.Geld_uebrig
@@ -218,7 +226,7 @@ class page_7_Fragentext(Page):
 class page_8_Results(Page):
     pass
 
-
+# Das Trustgame ist noch nicht integriert
 class page_9_Trustgame(Page):
     form_model = 'player'
     form_fields = ['vertrauen']
@@ -241,6 +249,10 @@ class Results(Page):
     pass
 
 
+#Hier stellt man die Reihenfolge der Pages ein
 page_sequence = [page_1_Startseite, page_2_Staatsbuergerschaft, page_2_5_Test_Staatsbuergerschaft, page_3_Einkommen,
                  page_4_Beduerfnisse_abdecken,
                  page_5_Fragentext_1, page_6_Fragentext_2, page_7_Fragentext, page_8_Results]
+
+#Zusätzlich
+# Die Button.css File soll später ein Stylesheet werden für die ganze Website. Da muss aber noch einiges probiert werden
