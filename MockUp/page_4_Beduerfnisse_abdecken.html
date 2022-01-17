@@ -1,0 +1,47 @@
+{% block title %}
+    Einkommen
+{% endblock %}
+
+{% block content %}
+    Von ihrem Einkommen müssen Sie Ihre Bedürfnisse abdecken.
+    Sie müssen wohnen, essen und ihre Freizeit gestalten.
+    <br>
+    Wohnungen
+    {% formfield player.Wohnung %}
+    <br>
+    Verpflegung
+    {% formfield player.Verpflegung %}
+    <br>
+    Freizeit
+    {% formfield player.Freizeit %}
+
+    Dein Konto: {% player.Geld_uebrig %}
+
+    {% if player.Geld_uebrig < 0 %}
+        <strong>
+        <p style="color: red">
+        Ihre Ausgaben übersteigen Ihre Einnahmen, Sie müssen eine andere Option wählen
+        </p>
+        </strong>
+
+    {% endif %}
+
+    {% if player.Geld_uebrig > 0 %}
+
+        {% next_button %}
+
+    {% endif %}
+
+    <script>
+    var Geld = player.Geld_uebrig;
+    var Freizeit = player.Freizeit;
+    var Verpflegung = player.Verpflegung;
+    var Wohnung = player.Wohnung;
+
+    function updateData(){
+        Geld = player.Geld_uebrig;
+    }
+    </script>
+
+
+{% endblock %}

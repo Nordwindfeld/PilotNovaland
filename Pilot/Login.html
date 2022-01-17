@@ -1,0 +1,39 @@
+{% block title %}Login{% endblock %}
+
+
+{% block title %}
+
+    <title>LOGIN</title>
+
+    <link rel="stylesheet" type="text/css" href="Login%20Menu.css.css">
+
+{% endblock %}
+
+{% block content %}
+
+     <form action="login.php" method="post">
+
+        <h2>LOGIN</h2>
+
+        <?php if (isset($_GET['error'])) { ?>
+
+            <p class="error"><?php echo $_GET['error']; ?></p>
+
+        <?php } ?>
+
+        <label>Benutzername</label>
+
+        <input type="text" name="uname" placeholder="Benutzername"><br>
+
+        <label>Password</label>
+
+        <input type="password" name="password" placeholder="Passwort"><br>
+
+        <button type="Bestätigen">Login</button>
+
+     </form>
+
+{% endblock %}
+
+{% next_button %}
+

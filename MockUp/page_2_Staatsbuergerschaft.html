@@ -1,0 +1,18 @@
+{% block title %}
+    Personenbeschreibung
+{% endblock %}
+{% block content %}
+
+Sie leben in dem Staat Novaland, <strong>{% if C.Staatsbuergerschaft == 1%} dessen Staatsbürger Sie sind {% else %} in dem Sie eine dauerhaft Aufenthaltserlaubnis besitzen {% endif %} </strong> <br>
+
+    Sie müssen Steuern zahlen. In Novaland gibt es eine dominierende Ethnie: die Alfianer.
+    Es gibt zwei weitere Ethnien, die viel kleiner sind: die Bolirianer und die Kolfianer.
+    Die Wahrscheinlichkeit, dass ihre Mitglieder arbeitslos sind, ist <strong>{% player.Mitglieder_Arbeitslos %} </strong> als bei den Alfianern.
+    Sie gehören der ethnischen Gruppe der <strong>{% player.Ethnische_Gruppe %}</strong> an.
+    Die nationale Regierung von Novaland gilt als <strong>{% player.Effizienz %}</strong> arbeitend.
+
+    {% formfields %}
+
+    {% next_button %}
+
+{% endblock %}

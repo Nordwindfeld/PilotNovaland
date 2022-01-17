@@ -1,0 +1,15 @@
+{% block title %}
+    Einkommen
+{% endblock %}
+{% block content %}
+
+Das Durchschnittseinkommen in Novaland beträgt 1500 Novas.
+    Ihr eigenes Einkommen beträgt <strong>{% player.Geld_besitz %}</strong>.
+    Auf dieses Einkommen müssen Sie eine Einkommensteuer von <strong>{% player.Einkommenssteuer %}</strong>% bezahlen,
+    sodass Ihnen noch <strong>{% player.Geld_uebrig %}</strong> Nova für ihren täglichen Bedarf bleiben.
+
+
+
+    {% next_button %}
+
+{% endblock %}

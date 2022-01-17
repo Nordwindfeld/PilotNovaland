@@ -1,0 +1,14 @@
+{% block title %}
+    Vertrauensspiel
+{% endblock %}
+{% block content %}
+    Die Seite stellt ein Vertrauensspiel dar.
+    Bei dieser müssen Sie einem anderen Mitspieler vertrauen oder nicht.
+
+    <button type="submit" name="vertrauen" value="True">Vertrauen</button>
+    <button type="submit" name="vertrauen" value="False">Nicht Vertrauen</button>
+    {% formfield_errors 'vertrauen' %}
+
+    {% next_button %}
+
+{% endblock %}
