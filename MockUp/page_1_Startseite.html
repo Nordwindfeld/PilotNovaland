@@ -1,13 +1,75 @@
-{% block title %}
+
+
+{% block head %}
+    <!-- Für mehr Informationen zu den einzelnen Elementen habe ich eine .docx Datei erstellt,
+    welche eine Vorlage für mich darstellt für Python, oTree, HTML, CSS, SQL etc. https://docs.google.com/document/d/15eVFgaT-wJ_-X2YY2IqLrUq3lHiwpSN_dL5CT9YLRck/edit?usp=sharing  -->
+
     Novaland-Enduser-Experience
-
+    <meta name="Novaland-Enduser">
 {% endblock %}
+
+
+{% block style %}
+<!-- Der Block Style ist der Ort an dem das Aussehen von der Seite mit Hilfe von CSS gestaltet wird -->
+<!-- Ich habe diesen Style auf alle HTML Seiten abgewendet. Eigentlich geschieht das durch .CSS Style Sheets aber irgendwie wollte das Programm die Styles nicht übernehmen.-->
+<!-- Um den Style an sich in die Elemente zu integrieren, verwendet man class="" in dem HTML Befehl also zum Beispiel bei <p> </p> verwendet man <p class='button'> </p> und kann damit den Style zuordnen-->
+<!-- Der Style wird in den Style Block definiert, in dem man den Elementnamen einträgt und einen Punkt davor setzt. Danach werden alle Veränderungen die danach definiert werden, für die Klasse übernommen.-->
+
+    <link rel="stylesheet" href="Button.css">
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: NONE;
+        color: white;
+        alignment: center;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: auto;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+    /* h2 habe ich hauptsächlich definiert um den schwarzen Rand ganz unten auf der Website zu gestalten. */
+    .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+    /* Mit h1 wird der Header der Website versehen. Das wichtigste vor allem ist der dunkel graue Background der die gleiche Farbe wie h2 hat.
+        Die einzelnen Eigenschaften die hier definiert betreffen die Farben, die Ränder, den Hintergrund und die Position der Schrift auf der Seite*/
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+    /* In p definiere ich die normale schrift im Text. Bis jetzt habe ich nur definiert das sie larger ist aber man könnte noch die Schriftart ändern oder sie anders positionieren.*/
+    .p{
+        font-size: larger;
+    }
+
+    </style>
+{% endblock %}
+
+
+
+
 {% block title %}
+<!-- Im Block Title habe ich die Unterschrift der Seite definiert und gleich im Design angepasst.-->
     <link rel="stylesheet" type="text/css" href="Button.css"/>
-    <h1> Novaland-Enduser-Experience</h1>
+    <h1 class="h1"> Novaland-Enduser-Experience</h1>
 {% endblock %}
-{% block content %}
 
+
+{% block content %}
+<!-- Hier ist der Content Block in dem der Inhalt der Seite definiert wird. -->
+
+<p class="p">
 Wir freuen uns, dass Sie unsere heutige Studie gestartet haben. Durch Ihre Teilnahme unterstützen Sie ein Forschungsprojekt zur „Untersuchung gesellschaftlicher und politischer Einstellungen“ der Universität Duisburg-Essen (Deutschland). Neben Ihren Antworten auf unsere Fragen, erheben wir zusätzliche Prozessdaten (z. B. Antwortzeiten), die es uns erlauben die Qualität unserer Umfrage besser zu beurteilen.
 
 Alle Ihre Informationen werden anonymisiert. Das heißt, alle Antworten werden getrennt von Ihren persönlichen Informationen gespeichert und verarbeitet. Es können keine Rückschlüsse auf Sie selbst gezogen werden.
@@ -18,11 +80,23 @@ Die Universität Duisburg-Essen nimmt den Datenschutz sehr ernst. Wir halten uns
 
 Wir wünschen Ihnen viel Spaß beim Ausfüllen und danken Ihnen herzlich für die Unterstützung!
 
-Ihr Forschungsteam der Universität Duisburg-Essen
+Ihr Forschungsteam der Universität Duisburg-Essen.
+</p>
 <!-- Ich werde auf mehreren Seiten HTML anwenden, dass sieht man einzelnen Zeilen wie <br> welche zum Beispiel einen Zeilenumbruch darstellen.-->
 <br>
-<br>
     <!-- Daher kann man auch Buttons bestimmt definieren und ihre Form ändern -->
+    <!-- Dadurch das dem Knopf keine anderen Elemente oder Funktionen zugeordnet werden, ist dieser ein ganz normaler submit button der checked,
+    ob alle Elemente in den formfields beantwortet worden sind und wenn das zu trifft, kann man die nächste Seite besuchen.-->
 <button class="button"> Weiter </button>
+    <br>
+    <br>
+    <br>
+    <!-- Hier wird wie oben erwähnt der untere schwarze Balken des Designs festgelegt.
+    Dadurch, dass keine Pixel definiert werden, sondern alles in dem gleichen Raster bleibt wie es von otree vorgesehen ist,
+    passt das Design sich auf der Website größe an und kann damit auf allen Plattformen verwendet werden.-->
+    <h2 class="h2"> </h2>
 
 {% endblock %}
+
+
+

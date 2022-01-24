@@ -1,15 +1,58 @@
-{% block title %}
-    Einkommen
-{% endblock %}
-{% block content %}
 
-Das Durchschnittseinkommen in Novaland beträgt 1500 Novas.
+{% block style %}
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Hier werden die gleichen Verfahren angewendet, die auf den Seiten davor definiert worden sind. -->
+    <h1 class="h1">Ihr Einkommen in Novaland</h1>
+  <p class="p">  Das Durchschnittseinkommen in Novaland beträgt 1500 Novas.
     Ihr eigenes Einkommen beträgt <strong>{% player.Geld_besitz %}</strong>.
     Auf dieses Einkommen müssen Sie eine Einkommensteuer von <strong>{% player.Einkommenssteuer %}</strong>% bezahlen,
     sodass Ihnen noch <strong>{% player.Geld_uebrig %}</strong> Nova für ihren täglichen Bedarf bleiben.
+  </p>
 
 
+ <button class='button' type='button' onclick='Next()'> Weiter </button>
 
-    {% next_button %}
+    <br>
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
 
+{% endblock %}
+
+{% block script %}
+    <script>
+        function Next(){
+            document.getElementById("form").submit();
+        }
+    </script>
 {% endblock %}

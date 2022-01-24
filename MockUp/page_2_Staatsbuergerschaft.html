@@ -1,18 +1,117 @@
-{% block title %}
-    Personenbeschreibung
+
+{% block style %}
+    <!-- Für Erklärungen zu block style siehe bitte page_1_Startseite-->
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+        .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+    </style>
+
 {% endblock %}
+
 {% block content %}
-
-Sie leben in dem Staat Novaland, <strong>{% if C.Staatsbuergerschaft == 1%} dessen Staatsbürger Sie sind {% else %} in dem Sie eine dauerhaft Aufenthaltserlaubnis besitzen {% endif %} </strong> <br>
-
+    <h1 class="h1">Personenbeschreibung</h1>
+    <p class="p">
+    <!-- Mit Hilfe von if Funktionen von Django bzw. Python kann die Anzeige auf der Seite beeinflusst werden.
+        Die Python Elemente werden in geschweifte Klammern {} geschrieben. Wenn der Name der Klasse mit einem Punkt getrennt davor geschrieben wird, können Variabeln der einzelnen Klassen
+        von der Python Seite integriert werden.-->
+    Sie leben in dem Staat Novaland, <strong>{% if C.Staatsbuergerschaft == 1%} dessen Staatsbürger Sie sind. {% else %} in dem Sie eine dauerhaft Aufenthaltserlaubnis besitzen. {% endif %} </strong> <br>
     Sie müssen Steuern zahlen. In Novaland gibt es eine dominierende Ethnie: die Alfianer.
     Es gibt zwei weitere Ethnien, die viel kleiner sind: die Bolirianer und die Kolfianer.
     Die Wahrscheinlichkeit, dass ihre Mitglieder arbeitslos sind, ist <strong>{% player.Mitglieder_Arbeitslos %} </strong> als bei den Alfianern.
     Sie gehören der ethnischen Gruppe der <strong>{% player.Ethnische_Gruppe %}</strong> an.
     Die nationale Regierung von Novaland gilt als <strong>{% player.Effizienz %}</strong> arbeitend.
+    </p>
 
-    {% formfields %}
+    <h5>
+    Bist du Staatsbürger von Novaland?
+    </h5>
+    <br>
+    <!-- Hier definiere ich die Buttons, welche "onlick" eine Funktion auslösen, welche unten in dem Javescript Block definiert wird.
+        Durch den type "radio" bekommen sie Form eines Radiobuttons, welcher angeklickt werden kann.
+        Der Name der Knöpfe die miteinander hängen, müssen gleich sein, damit diese miteinander verknüpft sind.-->
+    <input type="radio" onclick="Richtig()" name="Ja" class="radio">Ja</input>
+    <br>
+    <input type="radio" onclick="Falsch()" name="Ja" class="radio">Nein</input>
 
-    {% next_button %}
+    <!-- <div> stellen wichtige Elemente der HTML Page dar, da diese mit Hilfe von Javascripten verändert werden können.
+        Dadurch ist es möglich Responsive Pages zuerstellen.
+        Die Zuordnung einer ID ist zusätzlich wichtig, damit das Programm weiß, was verändert werden soll. -->
+    <div id="Kontrolle">
 
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
+
+
+{% endblock %}
+
+{% block script %}
+<!-- In diesem Script Block wird Hilfe von HTML und JS ein Script für die Buttons geschrieben und für die Veränderungen der Website.-->
+    <script>
+    // auf diese Art und Weise können Python Elemente in ein JS script integriert werden.
+        var Buergerschaft = {{ Staatsbuergerschaft }};
+    // mit document können wir vordefinierte Formeln von otree verwenden. Dadurch das wir "form" callen, können wir die Funktion des Next_buttons nachahmen und die Daten submiten und die neue Seite aufrufen.
+        function Next(){
+            document.getElementById("form").submit()
+        }
+
+    // Diese Funktion ordne ich den ersten Button in der HTML Page zu. Diese sagt, dass die Variable Kontrolle true wird und fragt eine if Funktion ab.
+    // Wenn die Bedingungen erfüllt worden sind, entsteht entweder ein button oder der Schriftzug, der die Teilnehmenden drauf hinweist, dass sie einen Fehler gemacht haben.
+    // Dabei ist es wichtig, dass die Bürgerschaft Variabel abgefragt wird, welche wir in der Python File definiert haben, um diese mit der Antwort der Spielenden abgleichen zu können.
+    // bei document.getElementById("") wird der Name abgefragt, welcher wir der <div> oben gegeben haben und mit innterHTML können wir den Inhalt in dem <div> verändern.
+        function Richtig(){
+            var Kontrolle = true;
+
+            if(Buergerschaft == 1 && Kontrolle == true){
+                document.getElementById("Kontrolle").innerHTML = "<br> <button class='button' type='button' onclick='Next()'> Weiter </button> ";}
+            else if (Buergerschaft == 0 && Kontrolle == true){
+                document.getElementById("Kontrolle").innerHTML = "<strong> <p style='color:darkred'>Bitte lesen Sie sich noch einmal gründlich die Beschreibung Ihrer Rolle durch. </p> </strong>  "
+                }
+        }
+    // Das Gleiche gilt für die Falsch funktion, nur das die Variabel Kontrolle false wird.
+        function Falsch(){
+            var Kontrolle = false;
+
+            if(Buergerschaft == 0 && Kontrolle == false){
+                document.getElementById("Kontrolle").innerHTML = "<br> <button class='button' type='button' onclick='Next()'> Weiter </button> ";}
+            else if (Buergerschaft == 1 && Kontrolle == false){
+                document.getElementById("Kontrolle").innerHTML = "<strong> <p style='color:darkred'>Bitte lesen Sie sich noch einmal gründlich die Beschreibung Ihrer Rolle durch. </p> </strong>  "
+                }
+
+        }
+
+    </script>
 {% endblock %}

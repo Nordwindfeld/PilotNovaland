@@ -1,13 +1,64 @@
-{% block title %}
-    Einkommen
+{% block style %}
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+          .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+
+    </style>
 {% endblock %}
+
+
 {% block content %}
-    Hier sind zwei Aussagen zu einer Streitfrage und einer Skala, mit der Sie Ihre eigene Meinung dazu abstufen können.
+
+    <h1 class="h2"> Fragen zu Novaland </h1>
+
+   <p class="p"> Hier sind zwei Aussagen zu einer Streitfrage und einer Skala, mit der Sie Ihre eigene Meinung dazu abstufen können.
     Stimmen Sie mit der Aussage oberhalb der Skala vollkommen überein wählen Sie das Antwortkästchen am oberen Rand.
     Stimmen Sie mit der Aussage unterhalb der Skala vollkommen überein wählen Sie das Antwortkästchen am unteren Rand.
     Liegt Ihre Meinung irgendwo dazwischen, können Sie das mit einem der Antwortkästchen dazwischen ausdrücken.
-
+    </p>
     {% formfields %}
-    {% next_button %}
+    <button class='button' type='button' onclick='Next()'> Weiter </button>
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
 
 {% endblock %}
+
+{% block script %}
+    <script>
+        function Next(){
+            document.getElementById("form").submit();
+        }
+    </script>
+{% endblock %}
+

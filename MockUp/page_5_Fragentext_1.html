@@ -1,12 +1,67 @@
-{% block title %}
-    Einkommen
+
+{% block style %}
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+          .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+
+    </style>
 {% endblock %}
+
+
 {% block content %}
-    Bitte sagen Sie uns, wie sehr Sie der folgenden Aussage zustimmen oder wie sehr Sie diese ablehnen.
-    Der Staat sollte Maßnahmen ergreifen, um Einkommensunterschiede zu verringern.
+    <!-- Auf dieser Seite füge ich eigentlich nur die Frage und das formfield ein, welche den Input von den Teilnehmenden speichert.
+     Das gleiche glt für page 6 und 7.-->
+    <h1 class="h1"> Fragen zu Novaland</h1>
+    <p class="p">
+        Bitte sagen Sie uns, wie sehr Sie der folgenden Aussage zustimmen oder wie sehr Sie diese ablehnen.
+        <br>
+        Der Staat sollte Maßnahmen ergreifen, um Einkommensunterschiede zu verringern.
+    </p>
 
     {% formfields %}
+    <br>
+    <button class='button' type='button' onclick='Next()'> Weiter </button>
 
-    {% next_button %}
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
 
+{% endblock %}
+
+{% block script %}
+    <script>
+        function Next(){
+            document.getElementById("form").submit();
+        }
+    </script>
 {% endblock %}

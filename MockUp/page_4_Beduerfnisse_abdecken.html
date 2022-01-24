@@ -1,47 +1,215 @@
-{% block title %}
-    Einkommen
+{% block style %}
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+          .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+
+    </style>
 {% endblock %}
 
 {% block content %}
-    <!-- Auf dieser wähle ich nur bestimmte formfields aus und platziere sie so auf der Seite,
-dass diese mit den Überschriften erscheinen. -->
+    <h1 class="h1">Bedürfnisse</h1>
+    <p class="p">
     Von ihrem Einkommen müssen Sie Ihre Bedürfnisse abdecken.
+    <br>
     Sie müssen wohnen, essen und ihre Freizeit gestalten.
     <br>
-    Wohnungen
-    {% formfield player.Wohnung %}
     <br>
-    Verpflegung
-    {% formfield player.Verpflegung %}
+    </p>
+    <!-- Hier definiere ich ganz viele Radio Buttons, die alle eine Funktion haben, welche unten im JS Script definiert werden
+        diese simulieren, eigentlich nur formfields nur das diese benutzer definiert sind und von JS verädnert werden können.-->
+    <h5> Wohnen</h5>
+    <p>Ihnen stehen verschiedene Unterkünfte zur Auswahl:</p>
+    <input type="radio" onclick="Haus()" name="Wohnung" class="radio" value=700> Ein großes Haus. (700 Novas)
     <br>
-    Freizeit
-    {% formfield player.Freizeit %}
+    <input type="radio" onclick="Wohnung_fun()" name="Wohnung" class="radio" value=450> Eine geräumige Wohnung. (450 Novas)
+    <br>
+    <input type="radio" onclick="Appartment()" name="Wohnung" class="radio" value=200> Eine kleines Ein-Zimmer-Apartment. (200 Novas)
+    <br>
+    <br>
+    <h5> Verpflegung</h5>
+    <p>Ihnen stehen verschiedene Möglichkeiten der Verpflegung zur Auswahl:</p>
+    <input type="radio" onclick="Essen_gehen2()" name="Verpflegung" class="p" value=700> Sie gehen regelmäßig Essen. (700 Novas)
+    <br>
+    <input type="radio" onclick="Nach_Hause()" name="Verpflegung" class="radio" value=450> Sie bestellen sich häufig etwas zu essen nach Hause. (450 Novas)
+    <br>
+    <input type="radio" onclick="Kochen_Zuhause()" name="Verpflegung" class="radio" value=200> Sie kaufen günstig ein und kochen zu Hause. (200 Novas)
+    <br>
+    <br>
+    <h5> Freizeit</h5>
+    <p>Ihnen stehen verschiedene Möglichkeiten der Freizeitgestaltung zur Auswahl:</p>
+    <input type="radio" onclick="Fliegen2()" name="Freizeit" class="radio" value=700> Sie fliegen im Urlaub in ein fernes Land. (700 Novas)
+    <br>
+    <input type="radio" onclick="Urlaubsregion()" name="Freizeit" class="radio" value=450> Sie fahren in ein Hotel in einer Urlaubsregion in Novaland. (450 Novas)
+    <br>
+    <input type="radio" onclick="Campingurlaub()" name="Freizeit" class="radio" value=200>Sie machen einen Campingurlaub in einer Urlaubsregion in Novaland. (200 Novas)
+    <br>
+<br>
+<div id="Kontostand_Var">
+Ihr Kontostand beträgt gerade: {% Geld %} Novas
+</div>
+<br>
+<div id="Zuviel">
 
-    Dein Konto: {% player.Geld_uebrig %}
+</div>
+<br>
+<div id="Next">
 
-    {% if player.Geld_uebrig < 0 %}
-        <strong>
-        <p style="color: red">
-        Ihre Ausgaben übersteigen Ihre Einnahmen, Sie müssen eine andere Option wählen
-        </p>
-        </strong>
+</div>
+    <h2 class="h2"></h2>
 
-    {% endif %}
+{% endblock %}
 
-    {% if player.Geld_uebrig > 0 %}
-
-        {% next_button %}
-
-    {% endif %}
+{% block script %}
 
     <script>
-    var Geld = player.Geld_uebrig;
-    var Freizeit = player.Freizeit;
-    var Verpflegung = player.Verpflegung;
-    var Wohnung = player.Wohnung;
+    // in den Script Blöcken schreibe ich Scripte welche die Seite beeinflussen können.
+    /* Daher schreibe ich hier die Werte auf, welche ich in meiner Python File definiert habe*/
 
-    function updateData(){
-        Geld = player.Geld_uebrig;
+    var Geld = {{ Geld }};
+    var Freizeit = {{ Freizeit }};
+    var Verpflegung = {{ Verpflegung }};
+    var Wohnung = {{ Wohnung }};
+    var Kontostand = Geld - Freizeit - Verpflegung - Wohnung;
+    var next_true = false;
+
+    // Diese Variabeln hier definier ich um zu checken, ob ein Feld angeklickt worden ist
+    var Wohnung_check = false;
+    var Freizeit_check = false;
+    var Verplegung_check = false;
+
+    // Hier definiere ich die OnClick Events, welche weiter oben definiert worden sind
+    //Wohnung
+    //-------------------------
+    // Hier wird die Liveveränderung des Kontostands definiert, welche wieder mit einer <div> verknüpft worden ist.
+        function Check_Kontostand() {
+        Kontostand = Geld - Freizeit - Verpflegung - Wohnung;
+        document.getElementById("Kontostand_Var").innerHTML = "Ihr Kontostand beträgt gerade: " + Kontostand + " Novas";
+    }
+
+    // Abfrage ob das Konto zu wenig ist oder ob die Teilnehmenden im Budget sind.
+    function Zu_wenig() {
+        if (Kontostand < 0) {
+            document.getElementById("Zuviel").innerHTML ="<strong> <p style='color:darkred' class='p'> Ihre Ausgaben übersteigen Ihre Einnahmen, Sie müssen eine andere Option wählen. </p></strong>";
+        }
+        if (Kontostand > 0) {
+            document.getElementById("Zuviel").innerHTML ="";
+        }
+    }
+
+    function next_page() {
+        if(Wohnung_check == true &&  Freizeit_check == true &&  Verplegung_check == true && Kontostand > 0){
+            document.getElementById("Next").innerHTML = "<button type='button' class='button' onclick='Next()'> Weiter </button>";
+        }
+    }
+
+    function Next(){
+            document.getElementById("form").submit();
+        }
+
+    function Haus() {
+        Wohnung = 700;
+        Wohnung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Wohnung_fun() {
+        Wohnung = 450;
+        Wohnung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Appartment() {
+        Wohnung = 200;
+        Wohnung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    //Verpflegung
+    //-------------------------
+        function Essen_gehen2() {
+        Verpflegung = 700;
+        Verplegung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Nach_Hause() {
+        Verpflegung = 450;
+        Verplegung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Kochen_Zuhause() {
+        Verpflegung = 200;
+        Verplegung_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    //Freizeit
+    //-------------------------
+        function Fliegen2() {
+        Freizeit = 700;
+        Freizeit_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Urlaubsregion() {
+        Freizeit = 450;
+        Freizeit_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
+    }
+
+    function Campingurlaub() {
+        Freizeit = 200;
+        Freizeit_check = true;
+        Check_Kontostand();
+        Zu_wenig();
+        next_page();
     }
     </script>
 

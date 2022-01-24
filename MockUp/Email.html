@@ -1,0 +1,29 @@
+{% block content %}
+    <!-- Diese Seite dient bis jetzt nur als Platzhalter für die EMail Versendung.-->
+<p class="p">
+
+</p>
+ <button onclick="SendMail()"> Send Mail </button>
+    <h2 class="h2"> </h2>
+
+{% endblock %}
+
+{% block script %}
+    <script src="https://smtpjs.com/v3/smtp.js"> </script>
+    <script src="smtp.js"></script>
+<script>
+    function SendMail() {
+        Email.send({
+            Host: "smtp.uni-duisburg-essen.de",
+            Username: "hq0679",
+            Passwort: "0?$W6XrieU!J+KO=,,zv",
+            To: "raphaelhuerler@yahoo.de",
+            From: "novaland@uni-duisburg-essen.de",
+            Subject: "Raphael sent you a message",
+            Body: "Hey"
+            }).then((message) => alert("Mail sent successfully"))
+
+
+    }
+</script>
+{% endblock %}

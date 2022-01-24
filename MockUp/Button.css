@@ -12,5 +12,21 @@
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
 }
-.button:hover {opacity: 1}
-.button5 {background-color: #555555;} /* Black */
+    .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }

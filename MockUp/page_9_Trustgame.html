@@ -1,14 +1,110 @@
-{% block title %}
-    Vertrauensspiel
+{% block style %}
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+          .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
+
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+
+    </style>
 {% endblock %}
+
+
 {% block content %}
-    Die Seite stellt ein Vertrauensspiel dar.
-    Bei dieser müssen Sie einem anderen Mitspieler vertrauen oder nicht.
+    <!-- Auf dieser Seite habe ich ein Trustgame erstellt, welches eine Zufallsvariabel also die Antwort des Gegenspieler vom Server bekommt.
+    Die Teilnehmenden entscheiden sich für einen Button und anhand der Entscheidung wird das Ergebnis abgegliechen.
+    Anhand der Entsheidung und dem Resultat, verändert sich die Page und der text.
+    Hauptsächliche Veränderungen wurden unten auch mit dem getId von <div> System gearbeitet.-->
+    <div id="main">
+       <h1 class="h1"> Die Seite stellt ein Vertrauensspiel dar. </h1>
+        Bei dieser müssen Sie einem anderen Mitspieler vertrauen oder nicht.
 
-    <button type="submit" name="vertrauen" value="True">Vertrauen</button>
-    <button type="submit" name="vertrauen" value="False">Nicht Vertrauen</button>
-    {% formfield_errors 'vertrauen' %}
+        Ihr habt einen Deal bei dem ihr Waren von 200 Novas miteinander tauschen möchtet.
+        Wenn ihr euch Gegenseitig vertraut findet der Deal reibungslos statt.
+        Durch die Weiterentwicklung des Produktes bekommt ihre Stadt einen Zuwachs von 100 Novas.
+        Wenn Sie der anderen Person nicht vertrauen bekommen Sie die Ware der Person für 200 Novas.
+        Wenn die andere Person ihnen nicht vertraut verlieren Sie ihre Ware von 200 Novas.
+        Die letzte Situation wäre, dass beide Parteien sich nicht vertrauen und der Deal findet nicht statt.
+        Was wollen sie tun?
+        <br>
+        <button type="button" class="button" onclick="Vertrauen()"> Der Person vertrauen</button>
 
-    {% next_button %}
+        <button type="button" class="button" onclick="Misstrauen()"> Der Person nicht vertrauen</button>
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
+    </div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+
+        function Vertrauen() {
+            var vertrauen_var = true;
+            var gegenspieler = {{ Gegenspieler }};
+            var Geld = {{ Geld }}
+
+
+            if (vertrauen_var == true && gegenspieler == 1) {
+                    document.getElementById("main").innerHTML = "<h1 class='h1'>Ergebnis</h1><br>Ihr habt euch beide vertraut und damit einen Zuwachs von 100 Novas bekommen. " +
+                        "Dein Kontostand beträgt " + (Geld + 100) + " Novas<br>" +
+                        "<button type='submit' class='button' name='Vertrauensspiel' value=true > Weiter </button>" + "<h2 class='h2'> <h2>";
+
+                } else if (vertrauen_var == true && gegenspieler == 2) {
+                    document.getElementById("main").innerHTML = "<h1 class='h1'>Ergebnis</h1><br>Du hast der Person vertraut. Sie dir aber nicht, daher hast du 200 Novas verloren. " +
+                        "Dein Kontostand beträgt" + (Geld - 200) + " Novas<br>" +
+                        "<button type='submit' class='button' name='Vertrauensspiel' value=true > Weiter </button>" + "<h2 class='h2'> <h2>";
+                }
+            }
+
+        function Misstrauen() {
+            var missvertrauen_var = false;
+            var gegenspieler = {{ Gegenspieler }};
+            var Geld = {{ Geld }}
+               if(missvertrauen_var == false && gegenspieler == 1){
+                document.getElementById("main").innerHTML = "<h1 class='h1'>Ergebnis</h1><br>Sie haben der Person nicht vertraut. Sie hat aber Ihnen vertraut, daher bekommen Sie 200 Novas. " +
+                        "Ihr Kontostand beträgt " + (Geld + 200) + " Novas<br>" +
+                        "<button type='submit' class='button' name='Vertrauensspiel' value=false> Weiter </button>" + "<br><h2 class='h2'> <h2>";
+
+
+            } else if (missvertrauen_var == false && gegenspieler == 2){
+                document.getElementById("main").innerHTML = "<h1 class='h1'>Ergebnis</h1><br>Sie haben sich beide nicht vertraut, daher ist der Deal nicht Zustande gekommen. " +
+                        "Ihr Kontostand beträgt " + (Geld) + " Novas<br>" +
+                        "<button type='submit' class='button' name='Vertrauensspiel' value=false> Weiter </button>" + "<br><h2 class='h2'> <h2>";
+
+            }
+        }
+    </script>
 
 {% endblock %}

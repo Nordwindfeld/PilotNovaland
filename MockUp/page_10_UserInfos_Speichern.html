@@ -1,10 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block style %}
+    <link rel="stylesheet" href="Button.css">
+    <style>
+    .button{
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+    .h2{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;
+    }
 
-</body>
-</html>
+    .h1{
+        padding: 60px;
+        text-align: center;
+        background: #363636;
+        color: white;
+        font-size: 30px;}
+
+    .p{
+        font-size: larger;
+    }
+
+    </style>
+{% endblock %}
+
+{% block title %}
+    <link rel="stylesheet" type="text/css" href="Button.css"/>
+    <h1 class="h1"> User-Informationen </h1>
+{% endblock %}
+{% block content %}
+    <!-- Diese Seite wurde bis jetzt nur geschrieben, um später mit der SQL Datei verknüpft zu werden.-->
+<p class="p">
+Bitte geben Sie ihre Nutzerinformationen ein, um fortfahren zu können.
+    <br>
+    {% formfields %}
+    <strong>Diese Daten werden vertraulich behandelt. </strong>
+<br>
+</p>
+<br>
+<button class="button"> Weiter </button>
+    <br>
+    <br>
+    <br>
+    <h2 class="h2"> </h2>
+
+{% endblock %}
